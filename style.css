@@ -6,18 +6,37 @@
 }
 
 body {
-    background: #222;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;  /* Ensures body takes full height of viewport */
+    background: #F5EFFF;
+}
+
+header {
+    background-color: #87A2FF;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    flex: 1; /* This allows the container to fill the available space */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the card in the middle */
 }
 
 .card {
     width: 90%;
     max-width: 470px;
+    max-height: 600px;  /* Set a maximum height for the card */
     background: linear-gradient(135deg, #52D3D8, #38419D);
     color: #fff;
-    margin: 100px auto 0;
+    margin: 20px;  /* Margin for spacing */
     border-radius: 20px;
     padding: 40px 35px;
     text-align: center;
+    overflow-y: auto; /* Allows scrolling if content exceeds max height */
 }
 
 .search {
@@ -119,4 +138,11 @@ body {
     background: #38419D;
     color: white;
     border-radius: 5px;
+}
+
+footer {
+    background-color: #87A2FF;
+    color: white;
+    padding: 15px;
+    text-align: center;
 }
