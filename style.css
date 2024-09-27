@@ -13,11 +13,13 @@ body {
 }
 
 header {
-    background-color: #87A2FF;
+    background: linear-gradient(135deg, #52D3D8, #38419D); /* Gradient background */
     color: white;
     padding: 20px;
     text-align: center;
 }
+
+
 
 .container {
     flex: 1; /* This allows the container to fill the available space */
