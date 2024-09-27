@@ -134,15 +134,30 @@ header {
 .unit-toggle {
     margin-top: 20px;
     padding: 10px;
-    border: none;
-    background: #38419D;
+    border: none; /* Remove border or set it to 'none' */
+    background: #335fa5;
     color: white;
     border-radius: 5px;
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Add transition for background and transform */
 }
 
+.unit-toggle:hover {
+    background: #2a4e7e; /* Darker shade for hover effect */
+    transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+.unit-toggle:focus {
+    outline: none; /* Remove the default outline on focus */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Optional: Add a glow effect on focus */
+}
+
+
 footer {
-    background-color: #87A2FF;
-    color: white;
-    padding: 15px;
+    background: #333;
+    color: #fff;
+    padding: 1rem;
     text-align: center;
+    border-top: 5px solid #2f679f;
+    margin-top: auto;
 }
