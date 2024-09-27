@@ -23,4 +23,5 @@ To run ClimeAware locally:
 
 1. Clone the repository:
    ```bash
-https://github.com/JSaurav0409/ClimeAware.git
+   https://github.com/JSaurav0409/ClimeAware.git
+
