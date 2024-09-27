@@ -1,11 +1,10 @@
 # ClimeAware 🌦️ - Real-time Weather Information App
 
-ClimeAware is a responsive weather application that provides real-time weather updates for any city in the world. The app uses the OpenWeatherMap API to fetch weather data such as temperature, humidity, and wind speed. It also supports features like geolocation and unit conversion (Celsius/Fahrenheit).
+ClimeAware is a responsive weather application that provides real-time weather updates for any city in the world. The app uses the OpenWeatherMap API to fetch weather data such as temperature, humidity, and wind speed. It also supports unit conversion (Celsius/Fahrenheit).
 
 ## Features 🚀
 
 - **Real-time Weather Data**: Get current weather details like temperature, humidity, and wind speed for any city.
-- **Geolocation Support**: Automatically fetch weather data for your current location using the browser's geolocation feature.
 - **Unit Conversion**: Switch between Celsius and Fahrenheit units with a single click.
 - **Responsive Design**: Optimized for mobile and desktop users.
 - **Loading Indicator**: A loading spinner provides feedback while fetching data.
@@ -18,21 +17,11 @@ ClimeAware is a responsive weather application that provides real-time weather u
 - **CSS3**: Styling and responsive layout.
 - **JavaScript (ES6+)**: Dynamic functionality to interact with the OpenWeatherMap API.
 - **OpenWeatherMap API**: Used for fetching live weather data.
-- **Geolocation API**: Automatically fetch weather for the user's location.
-
 
 ## Usage 📋
 
-<<<<<<< HEAD
 1. **Search by City**: Enter a city name in the search bar and click the search button (or press Enter) to get weather data.
-2. **Geolocation**: Allow the app to access your location to automatically get weather updates for your current location.
-3. **Unit Conversion**: Click the `°C/°F` button to switch between Celsius and Fahrenheit.
-=======
-1. Clone the repository:
-   ```bash
-   https://github.com/JSaurav0409/ClimeAware.git
->>>>>>> ad80eca6c70e7921fc531eda78b73f5d9368de50
-
+2. **Unit Conversion**: Click the `°C/°F` button to switch between Celsius and Fahrenheit.
 
 ## API Reference 🔗
 
