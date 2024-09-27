@@ -23,9 +23,15 @@ ClimeAware is a responsive weather application that provides real-time weather u
 
 ## Usage 📋
 
+<<<<<<< HEAD
 1. **Search by City**: Enter a city name in the search bar and click the search button (or press Enter) to get weather data.
 2. **Geolocation**: Allow the app to access your location to automatically get weather updates for your current location.
 3. **Unit Conversion**: Click the `°C/°F` button to switch between Celsius and Fahrenheit.
+=======
+1. Clone the repository:
+   ```bash
+   https://github.com/JSaurav0409/ClimeAware.git
+>>>>>>> ad80eca6c70e7921fc531eda78b73f5d9368de50
 
 
 ## API Reference 🔗
