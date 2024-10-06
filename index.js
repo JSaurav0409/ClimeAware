@@ -58,11 +58,13 @@ function createForecastCards(forecast) {
     const uniqueDays = {}; // Store unique days to ensure we get one entry per day
 
     forecast.forEach(item => {
-        const date = new Date(item.dt * 1000).toLocaleDateString(); // Get the date
+        const date = new Date(item.dt * 1000); // Convert to a Date object
+        const dateString = date.toLocaleDateString(); // Get the date in a readable format
+        const dayOfWeek = date.toLocaleDateString(undefined, { weekday: 'long' }); // Get the full day name
 
         // Check if the date is already processed
-        if (!uniqueDays[date] && Object.keys(uniqueDays).length < forecastLimit) {
-            uniqueDays[date] = true; // Mark this date as processed
+        if (!uniqueDays[dateString] && Object.keys(uniqueDays).length < forecastLimit) {
+            uniqueDays[dateString] = true; // Mark this date as processed
 
             const tempCelsius = Math.round(item.main.temp);
             const tempFahrenheit = Math.round((tempCelsius * 9 / 5) + 32);
@@ -73,7 +75,7 @@ function createForecastCards(forecast) {
             const forecastCard = document.createElement("div");
             forecastCard.classList.add("forecast-card");
             forecastCard.innerHTML = `
-                <h3>${date}</h3>
+                <h3>${dayOfWeek}, ${dateString}</h3> <!-- Display day and date -->
                 <img src="${getWeatherIcon(item.weather[0].main)}" alt="forecast-icon">
                 <p>${isCelsius ? tempCelsius : tempFahrenheit}°${isCelsius ? 'C' : 'F'}</p>
                 <p>Humidity: ${humidity}%</p>
@@ -84,6 +86,7 @@ function createForecastCards(forecast) {
         }
     });
 }
+
 
 
 function getWeatherIcon(condition) {
