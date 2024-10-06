@@ -6,76 +6,133 @@ const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
 const unitToggle = document.querySelector(".unit-toggle");
 let isCelsius = true;
+let forecastData = []; // Global variable to store forecast data
+const forecastLimit = 6; // Number of forecast days to show
 
 async function checkWeather(city) {
     document.querySelector(".loading").style.display = "block";
     
     const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
     
-    document.querySelector(".loading").style.display = "none"; // Hide when data is fetched
+    document.querySelector(".loading").style.display = "none"; // Hide loading
+
+    if (response.ok) {
+        const data = await response.json();
+        displayWeather(data);
+        await fetchForecast(data.coord.lat, data.coord.lon); // Fetch forecast using latitude and longitude
+    } else {
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".weather").style.display = "none";
+        document.querySelector(".forecast-container").style.display = "none"; // Hide forecast
+    }
+}
+
+function displayWeather(data) {
+    const tempCelsius = Math.round(data.main.temp);
+    const tempFahrenheit = Math.round((tempCelsius * 9 / 5) + 32);
+
+    document.querySelector(".temp").textContent = `${isCelsius ? tempCelsius : tempFahrenheit}°${isCelsius ? 'C' : 'F'}`;
+    document.querySelector(".city").textContent = data.name;
+    document.querySelector(".humidity").textContent = `${data.main.humidity}%`;
+    document.querySelector(".wind").textContent = `${data.wind.speed} km/h`;
+    weatherIcon.src = getWeatherIcon(data.weather[0].main);
+    document.querySelector(".weather").style.display = "block";
+    document.querySelector(".error").style.display = "none";
+}
+// Assuming other parts of your code remain unchanged
+
+async function fetchForecast(lat, lon) {
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${apiKey}`;
     
-    if (response.status == 404) {
-        document.querySelector(".error").innerHTML = "City not found. Please enter a valid city name.";
-        document.querySelector(".error").style.display = "block";
-        document.querySelector(".weather").style.display = "none";
-    } else if (response.status == 429) {
-        document.querySelector(".error").innerHTML = "API limit exceeded. Please try again later.";
-        document.querySelector(".error").style.display = "block";
-        document.querySelector(".weather").style.display = "none";
-    } else {
-        let data = await response.json();
+    const response = await fetch(forecastUrl);
+    const data = await response.json();
+    forecastData = data.list; // Store the forecast data globally
+    createForecastCards(forecastData); // Pass forecast data to create cards
+    document.querySelector(".forecast-container").style.display = "block"; // Show forecast container
+}
 
-        document.querySelector(".city").innerHTML = data.name;
-        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
-        document.querySelector(".humidity").innerHTML = data.main.humidity + " %";
-        document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+function createForecastCards(forecast) {
+    const forecastContainer = document.querySelector(".forecast");
+    forecastContainer.innerHTML = ""; // Clear previous cards
 
-       // Weather condition icons
-const weatherCondition = data.weather[0].main;
+    const uniqueDays = {}; // Store unique days to ensure we get one entry per day
 
-if (weatherCondition === "Clouds") {
-    weatherIcon.src = "images/clouds.png";
-} else if (weatherCondition === "Clear") {
-    weatherIcon.src = "images/clear.png";
-} else if (weatherCondition === "Rain") {
-    weatherIcon.src = "images/rain.png";
-} else if (weatherCondition === "Drizzle") {
-    weatherIcon.src = "images/drizzle.png";
-} else if (weatherCondition === "Mist") {
-    weatherIcon.src = "images/mist.png";
-} else {
-    // Optional: Set a default icon if none of the above matches
-    weatherIcon.src = "images/default.png"; // Change this to your default image path
+    forecast.forEach(item => {
+        const date = new Date(item.dt * 1000).toLocaleDateString(); // Get the date
+
+        // Check if the date is already processed
+        if (!uniqueDays[date] && Object.keys(uniqueDays).length < forecastLimit) {
+            uniqueDays[date] = true; // Mark this date as processed
+
+            const tempCelsius = Math.round(item.main.temp);
+            const tempFahrenheit = Math.round((tempCelsius * 9 / 5) + 32);
+            const humidity = item.main.humidity; // Humidity
+            const windSpeed = item.wind.speed; // Wind speed
+            const weatherDescription = item.weather[0].description; // Weather description
+
+            const forecastCard = document.createElement("div");
+            forecastCard.classList.add("forecast-card");
+            forecastCard.innerHTML = `
+                <h3>${date}</h3>
+                <img src="${getWeatherIcon(item.weather[0].main)}" alt="forecast-icon">
+                <p>${isCelsius ? tempCelsius : tempFahrenheit}°${isCelsius ? 'C' : 'F'}</p>
+                <p>Humidity: ${humidity}%</p>
+                <p>Wind Speed: ${windSpeed} km/h</p>
+                <p>${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</p>
+            `;
+            forecastContainer.appendChild(forecastCard);
+        }
+    });
 }
 
 
-        document.querySelector(".weather").style.display = "block";
-        document.querySelector(".error").style.display = "none";
+function getWeatherIcon(condition) {
+    // Map weather conditions to icon paths
+    const icons = {
+        Clear: 'images/clear.png',
+        Clouds: 'images/clouds.png',
+        Rain: 'images/rain.png',
+        Drizzle: 'images/drizzle.png',
+        Mist: 'images/mist.png',
+        // Add more conditions as needed
+    };
+
+    return icons[condition] || 'images/clouds.png'; // Return a default icon if no match is found
+}
+
+
+// Function to handle the search functionality
+function handleSearch() {
+    const city = searchBox.value;
+    if (city) {
+        checkWeather(city);
+        searchBox.value = ""; // Clear the input after search
     }
 }
 
-searchBtn.addEventListener("click", () => {
-    checkWeather(searchBox.value);
-});
+// Event listener for the search button
+searchBtn.addEventListener("click", handleSearch);
 
-searchBox.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
-        checkWeather(searchBox.value);
+// Event listener for the Enter key press in the search input
+searchBox.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") { // Check if Enter key is pressed
+        handleSearch(); // Call the handleSearch function
     }
 });
 
-// Unit conversion
+
 unitToggle.addEventListener("click", () => {
-    if (isCelsius) {
-        const tempC = parseFloat(document.querySelector(".temp").innerHTML);
-        const tempF = Math.round((tempC * 9 / 5) + 32);
-        document.querySelector(".temp").innerHTML = tempF + "°F";
-        unitToggle.innerHTML = "°C";
-    } else {
-        const tempF = parseFloat(document.querySelector(".temp").innerHTML);
-        const tempC = Math.round((tempF - 32) * 5 / 9);
-        document.querySelector(".temp").innerHTML = tempC + "°C";
-        unitToggle.innerHTML = "°F";
-    }
-    isCelsius = !isCelsius;
+    isCelsius = !isCelsius; // Toggle the unit
+    unitToggle.textContent = isCelsius ? '°F' : '°C'; // Change button text
+
+    // Update the current temperature
+    const tempElement = document.querySelector(".temp");
+    const currentTemp = parseInt(tempElement.textContent);
+    
+    // Update temperature based on current unit
+    const newTemp = isCelsius ? Math.round((currentTemp - 32) * 5/9) : Math.round((currentTemp * 9/5) + 32);
+    tempElement.textContent = `${newTemp}°${isCelsius ? 'C' : 'F'}`;
+
+    // Update forecast cards using the stored forecastData
+    createForecastCards(forecastData);
 });

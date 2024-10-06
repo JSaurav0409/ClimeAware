@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', 'sans-serif';
+    font-family: 'Montserrat';
     box-sizing: border-box;
 }
 
@@ -9,17 +9,15 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;  /* Ensures body takes full height of viewport */
-    background: #F5EFFF;
+    background: #E8F5FD;  /* Light blue background */
 }
 
 header {
-    background: linear-gradient(135deg, #52D3D8, #38419D); /* Gradient background */
+    background: linear-gradient(135deg, #00A8E1, #1C6DD0); /* Gradient background */
     color: white;
     padding: 20px;
     text-align: center;
 }
-
-
 
 .container {
     flex: 1; /* This allows the container to fill the available space */
@@ -32,7 +30,7 @@ header {
     width: 90%;
     max-width: 470px;
     max-height: 600px;  /* Set a maximum height for the card */
-    background: linear-gradient(135deg, #52D3D8, #38419D);
+    background: linear-gradient(135deg, #1C6DD0, #00A8E1);  /* Lighter gradient */
     color: #fff;
     margin: 20px;  /* Margin for spacing */
     border-radius: 20px;
@@ -51,7 +49,7 @@ header {
 .search input {
     border: 0;
     outline: 0;
-    background: #ebfffc;
+    background: #F2FBFF;  /* Light input background */
     color: #555;
     padding: 10px 25px;
     height: 60px;
@@ -64,7 +62,7 @@ header {
 .search button {
     border: 0;
     outline: 0;
-    background: #ebfffc;
+    background: #F2FBFF;  /* Light button background */
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -137,7 +135,7 @@ header {
     margin-top: 20px;
     padding: 10px;
     border: none; /* Remove border or set it to 'none' */
-    background: #335fa5;
+    background: #FFB600; /* Soft yellow background */
     color: white;
     border-radius: 5px;
     cursor: pointer; /* Change cursor to pointer */
@@ -145,7 +143,7 @@ header {
 }
 
 .unit-toggle:hover {
-    background: #2a4e7e; /* Darker shade for hover effect */
+    background: #FFA500; /* Darker shade for hover effect */
     transform: scale(1.05); /* Slightly scale up on hover */
 }
 
@@ -154,12 +152,88 @@ header {
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Optional: Add a glow effect on focus */
 }
 
+.forecast-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.forecast {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allows wrapping of cards when needed */
+}
+
+.forecast-card {
+    background: #F9F9F9; /* Light gray background for forecast cards */
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    width: calc(16.66% - 20px); /* 6 cards in a row for larger screens */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect for depth */
+}
+
+.forecast-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+}
+
+.forecast-card img {
+    width: 50px; /* Adjust the icon size for the forecast */
+}
+
+.forecast-card h3 {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #1C6DD0; /* Color for forecast card titles */
+}
+
+.forecast-card p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555; /* Slightly darker color for text */
+}
 
 footer {
     background: #333;
     color: #fff;
     padding: 1rem;
     text-align: center;
-    border-top: 5px solid #2f679f;
+    border-top: 5px solid #00A8E1; /* Top border color */
     margin-top: auto;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .forecast-card {
+        width: calc(20% - 20px); /* 5 cards in a row for medium screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .forecast-card {
+        width: calc(33.33% - 20px); /* 3 cards in a row for smaller medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .forecast-card {
+        width: calc(45% - 20px); /* 2 cards in a row for tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .forecast-card {
+        width: calc(100% - 20px); /* 1 card in a row for mobile */
+    }
+
+    .details {
+        flex-direction: column; /* Stack details vertically */
+    }
+
+    .col {
+        justify-content: center; /* Center-align details */
+        margin: 10px 0; /* Add margin for spacing */
+    }
 }
