@@ -67,10 +67,35 @@ header {
     width: 60px;
     height: 60px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .search button img {
     width: 18px;
+}
+
+/* Adjustments for mobile responsiveness */
+@media (max-width: 768px) {
+    .search button {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .search button img {
+        width: 16px; /* Slightly smaller icon on mobile */
+    }
+
+    .search input {
+        padding: 8px 15px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .card {
+        padding: 20px 15px; /* Reduced padding for mobile */
+    }
 }
 
 .weather-icon {
@@ -134,22 +159,22 @@ header {
 .unit-toggle {
     margin-top: 20px;
     padding: 10px;
-    border: none; /* Remove border or set it to 'none' */
-    background: #FFB600; /* Soft yellow background */
+    border: none;
+    background: #FFB600;
     color: white;
     border-radius: 5px;
-    cursor: pointer; /* Change cursor to pointer */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Add transition for background and transform */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .unit-toggle:hover {
-    background: #FFA500; /* Darker shade for hover effect */
-    transform: scale(1.05); /* Slightly scale up on hover */
+    background: #FFA500;
+    transform: scale(1.05);
 }
 
 .unit-toggle:focus {
-    outline: none; /* Remove the default outline on focus */
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Optional: Add a glow effect on focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .forecast-container {
@@ -160,39 +185,39 @@ header {
 .forecast {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap; /* Allows wrapping of cards when needed */
+    flex-wrap: wrap;
 }
 
 .forecast-card {
-    background: #F9F9F9; /* Light gray background for forecast cards */
+    background: #F9F9F9;
     border-radius: 10px;
     padding: 15px;
     margin: 10px;
-    width: calc(16.66% - 20px); /* 6 cards in a row for larger screens */
+    width: calc(16.66% - 20px);
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .forecast-card:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .forecast-card img {
-    width: 50px; /* Adjust the icon size for the forecast */
+    width: 50px;
 }
 
 .forecast-card h3 {
     font-size: 20px;
     margin: 10px 0;
-    color: #1C6DD0; /* Color for forecast card titles */
+    color: #1C6DD0;
 }
 
 .forecast-card p {
     font-size: 16px;
     margin: 5px 0;
-    color: #555; /* Slightly darker color for text */
+    color: #555;
 }
 
 footer {
@@ -200,40 +225,40 @@ footer {
     color: #fff;
     padding: 1rem;
     text-align: center;
-    border-top: 5px solid #00A8E1; /* Top border color */
+    border-top: 5px solid #00A8E1;
     margin-top: auto;
 }
 
 /* Responsive Styles */
 @media (max-width: 1200px) {
     .forecast-card {
-        width: calc(20% - 20px); /* 5 cards in a row for medium screens */
+        width: calc(20% - 20px);
     }
 }
 
 @media (max-width: 992px) {
     .forecast-card {
-        width: calc(33.33% - 20px); /* 3 cards in a row for smaller medium screens */
+        width: calc(33.33% - 20px);
     }
 }
 
 @media (max-width: 768px) {
     .forecast-card {
-        width: calc(45% - 20px); /* 2 cards in a row for tablets */
+        width: calc(45% - 20px);
     }
 }
 
 @media (max-width: 480px) {
     .forecast-card {
-        width: calc(100% - 20px); /* 1 card in a row for mobile */
+        width: calc(100% - 20px);
     }
 
     .details {
-        flex-direction: column; /* Stack details vertically */
+        flex-direction: column;
     }
 
     .col {
-        justify-content: center; /* Center-align details */
-        margin: 10px 0; /* Add margin for spacing */
+        justify-content: center;
+        margin: 10px 0;
     }
 }
