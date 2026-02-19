@@ -1,63 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClimeAware</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="images/clear.png" type="image/x-icon">
-</head>
-<body>
-    
-    <header>
-        <h1>ClimeAware ⛅</h1>
-    </header>
-
-    <div class="container">
-        <div class="card">
-            <div class="search">
-                <input type="text" placeholder="Enter city name" spellcheck="false">
-                <button><img src="images/search.png" alt="search icon"></button>
-            </div>
-            <div class="loading">Loading...</div>
-            <div class="error">
-                <p>Enter a valid city</p>
-            </div>
-            <div class="weather">
-                <img src="images/rain.png" alt="icon" class="weather-icon">
-                <h1 class="temp">22°C</h1>
-                <h2 class="city">New Delhi</h2>
-            </div>
-            <div class="details">
-                <div class="col">
-                    <img src="images/humidity.png" alt="icon">
-                    <div>
-                        <p class="humidity"> 00 %</p>
-                        <p>Humidity</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <img src="images/wind.png" alt="icon">
-                    <div>
-                        <p class="wind">00 km/h</p>
-                        <p>Wind Speed</p>
-                    </div>
-                </div>
-            </div>
-            <button class="unit-toggle">°F</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClimeAware | Premium Weather</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="images/clear.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="glass-card">
+        <div class="search-bar">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search city..."
+            spellcheck="false"
+          />
+          <button class="search-btn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
         </div>
-    </div>
 
-    <div class="forecast-container" style="display: none;">
-        <h2>Forecast</h2>
-        <div class="forecast"></div> <!-- This will hold the forecast cards -->
+        <div class="status-msg error" style="display: none">
+          City not found. Try again!
+        </div>
+        <div class="status-msg loading" style="display: none">
+          Fetching data...
+        </div>
+
+        <div class="weather-box">
+          <div class="main-info">
+            <img src="images/clear.png" class="main-icon" alt="weather icon" />
+            <div class="temp-container">
+              <h1 class="temp">--</h1>
+              <span class="unit-toggle" id="unit-btn">°C</span>
+            </div>
+            <h2 class="city">Search a City</h2>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-item">
+              <i class="fa-solid fa-droplet"></i>
+              <div>
+                <p class="humidity">--%</p>
+                <span>Humidity</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fa-solid fa-wind"></i>
+              <div>
+                <p class="wind">-- km/h</p>
+                <span>Wind Speed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="forecast-section">
+          <h3>5-Day Forecast</h3>
+          <div class="forecast-row" id="forecast"></div>
+        </div>
+      </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 ClimeAware</p>
+      <p>&copy; 2026 ClimeAware • Powered by OpenWeather</p>
     </footer>
 
     <script src="index.js"></script>
-
-</body>
+  </body>
 </html>
