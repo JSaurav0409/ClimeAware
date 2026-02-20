@@ -21,21 +21,24 @@
             placeholder="Search city..."
             spellcheck="false"
           />
-          <button class="search-btn">
+          <button class="search-btn" aria-label="Search">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
 
-        <div class="status-msg error" style="display: none">
-          City not found. Try again!
-        </div>
-        <div class="status-msg loading" style="display: none">
-          Fetching data...
+        <div class="status-container">
+          <div class="status-msg error" style="display: none">
+            <i class="fa-solid fa-triangle-exclamation"></i> City not found. Try
+            again!
+          </div>
+          <div class="status-msg loading" style="display: none">
+            <i class="fa-solid fa-circle-notch fa-spin"></i> Fetching data...
+          </div>
         </div>
 
         <div class="weather-box">
           <div class="main-info">
-            <img src="images/clear.png" class="main-icon" alt="weather icon" />
+            <img src="images/clear.png" class="main-icon" alt="Weather Icon" />
             <div class="temp-container">
               <h1 class="temp">--</h1>
               <span class="unit-toggle" id="unit-btn">°C</span>
@@ -59,13 +62,13 @@
               </div>
             </div>
           </div>
-        </div>
 
-        <hr class="divider" />
+          <hr class="divider" />
 
-        <div class="forecast-section">
-          <h3>5-Day Forecast</h3>
-          <div class="forecast-row" id="forecast"></div>
+          <div class="forecast-section">
+            <h3>5-Day Forecast</h3>
+            <div class="forecast-row" id="forecast"></div>
+          </div>
         </div>
       </div>
     </div>
