@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ClimeAware | Premium Weather</title>
+
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/clear.png" type="image/x-icon" />
     <link
@@ -12,7 +13,23 @@
     />
   </head>
   <body>
-    <div class="app-container">
+    <header class="app-header">
+      <div class="header-content">
+        <div class="logo">
+          <i class="fa-solid fa-cloud-bolt"></i>
+          <span class="brand-name">Clime<span>Aware</span></span>
+        </div>
+
+        <div class="header-meta">
+          <div class="live-indicator">
+            <span class="dot"></span>
+            Live Updates
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-container">
       <div class="glass-card">
         <div class="search-bar">
           <input
@@ -38,7 +55,11 @@
 
         <div class="weather-box">
           <div class="main-info">
-            <img src="images/clear.png" class="main-icon" alt="Weather Icon" />
+            <img
+              src="images/clear.png"
+              class="main-icon"
+              alt="Weather Status"
+            />
             <div class="temp-container">
               <h1 class="temp">--</h1>
               <span class="unit-toggle" id="unit-btn">°C</span>
@@ -71,7 +92,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <footer>
       <p>&copy; 2026 ClimeAware • Powered by OpenWeather</p>

@@ -3,10 +3,7 @@
 /* ─── Tokens ───────────────────────────────────────────── */
 :root {
   --glass-bg: rgba(255, 255, 255, 0.12);
-  --glass-bg-hover: rgba(255, 255, 255, 0.18);
   --glass-border: rgba(255, 255, 255, 0.28);
-  --glass-border-strong: rgba(255, 255, 255, 0.45);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.1);
   --glass-shadow-deep:
     0 24px 64px rgba(0, 0, 0, 0.28), 0 4px 16px rgba(0, 0, 0, 0.14);
   --specular: rgba(255, 255, 255, 0.55);
@@ -16,20 +13,16 @@
   --text-secondary: rgba(255, 255, 255, 0.65);
   --radius-card: 28px;
   --radius-sm: 16px;
-  --radius-xs: 12px;
   --blur: blur(28px) saturate(180%);
 }
 
 /* ─── Reset ────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ─── Background ────────────────────────────────────────── */
 body {
   font-family: "DM Sans", sans-serif;
   min-height: 100vh;
@@ -40,7 +33,6 @@ body {
   position: relative;
 }
 
-/* Layered ambient background */
 body::before {
   content: "";
   position: fixed;
@@ -48,131 +40,135 @@ body::before {
   background:
     radial-gradient(ellipse 80% 60% at 20% 10%, #1a5fb4 0%, transparent 60%),
     radial-gradient(ellipse 60% 80% at 80% 20%, #0a3d6e 0%, transparent 55%),
-    radial-gradient(ellipse 70% 50% at 50% 80%, #1e3a5f 0%, transparent 60%),
     linear-gradient(160deg, #0d2137 0%, #0a2847 40%, #0e1f3b 100%);
   z-index: -2;
 }
 
-/* Ambient orbs — depth & colour */
-body::after {
-  content: "";
+/* ─── App Header ────────────────────────────────────────── */
+.app-header {
+  width: 100%;
+  padding: 1.5rem 2rem;
   position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+}
+
+.logo i {
+  font-size: 1.8rem;
+  color: var(--accent-warm);
+  filter: drop-shadow(0 0 8px rgba(255, 185, 64, 0.5));
+}
+
+.brand-name {
+  font-family: "SF Pro Display", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.brand-name span {
+  font-weight: 300;
+  opacity: 0.7;
+}
+
+.live-indicator {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--glass-border);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #4ade80;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 10px #4ade80;
+}
+
+.dot::after {
+  content: "";
+  position: absolute;
   inset: 0;
-  background:
-    radial-gradient(
-      circle 340px at 15% 25%,
-      rgba(0, 140, 255, 0.22) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      circle 260px at 85% 15%,
-      rgba(100, 200, 255, 0.14) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      circle 400px at 70% 75%,
-      rgba(0, 80, 180, 0.2) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      circle 220px at 30% 80%,
-      rgba(0, 180, 255, 0.1) 0%,
-      transparent 70%
-    );
-  z-index: -1;
-  animation: orb-drift 18s ease-in-out infinite alternate;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
 }
 
-@keyframes orb-drift {
-  from {
-    transform: translate(0, 0) scale(1);
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
   }
-  to {
-    transform: translate(20px, -15px) scale(1.04);
+  80%,
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
   }
 }
 
-/* ─── Layout ─────────────────────────────────────────────── */
+/* ─── Layout & Glass Card ────────────────────────────────── */
 .app-container {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 100px 24px 40px;
 }
 
-/* ─── Liquid Glass Card ──────────────────────────────────── */
 .glass-card {
   position: relative;
   width: 100%;
   max-width: 440px;
   border-radius: var(--radius-card);
-  padding: 28px 28px 24px;
-  text-align: center;
-
-  /* Base glass layer */
+  padding: 28px;
   background: var(--glass-bg);
   backdrop-filter: var(--blur);
   -webkit-backdrop-filter: var(--blur);
   border: 1px solid var(--glass-border);
   box-shadow:
     var(--glass-shadow-deep),
-    inset 0 1px 0 var(--specular),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
-
+    inset 0 1px 0 var(--specular);
+  text-align: center;
   animation: card-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 @keyframes card-in {
   from {
     opacity: 0;
-    transform: translateY(28px) scale(0.97);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
-}
-
-/* Specular highlight — the key to liquid glass */
-.glass-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-card);
-  background: linear-gradient(
-    155deg,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(255, 255, 255, 0.06) 30%,
-    transparent 55%,
-    rgba(255, 255, 255, 0.04) 100%
-  );
-  pointer-events: none;
-}
-
-/* Edge glow rim */
-.glass-card::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: calc(var(--radius-card) + 1px);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.4) 0%,
-    rgba(255, 255, 255, 0.08) 40%,
-    transparent 60%,
-    rgba(100, 180, 255, 0.18) 100%
-  );
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 1px;
-  pointer-events: none;
 }
 
 /* ─── Search Bar ─────────────────────────────────────────── */
@@ -185,129 +181,43 @@ body::after {
 .search-input {
   flex: 1;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-top-color: rgba(255, 255, 255, 0.4);
-  outline: none;
   padding: 12px 18px;
   border-radius: var(--radius-sm);
   color: #fff;
-  font-family: "DM Sans", sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  transition:
-    border-color 0.25s,
-    background 0.25s,
-    box-shadow 0.25s;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
-}
-
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.42);
+  outline: none;
+  transition: all 0.25s;
 }
 
 .search-input:focus {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.38);
-  border-top-color: rgba(255, 255, 255, 0.6);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    0 0 0 3px rgba(0, 194, 255, 0.16);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent);
 }
 
 .search-btn {
   width: 48px;
   height: 48px;
-  flex-shrink: 0;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  color: #fff;
-  font-size: 16px;
-  position: relative;
-  overflow: hidden;
-  transition:
-    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.2s;
-
-  /* Liquid glass button */
-  background: rgba(0, 194, 255, 0.28);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(0, 194, 255, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-top-color: rgba(255, 255, 255, 0.55);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
-    0 4px 16px rgba(0, 140, 255, 0.25);
-}
-
-.search-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.28) 0%,
-    transparent 100%
-  );
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  pointer-events: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .search-btn:hover {
-  transform: scale(1.08);
-  background: rgba(0, 194, 255, 0.38);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    0 6px 24px rgba(0, 140, 255, 0.38);
+  transform: scale(1.05);
+  background: rgba(0, 194, 255, 0.35);
 }
 
-.search-btn:active {
-  transform: scale(0.96);
-}
-
-/* ─── Status ─────────────────────────────────────────────── */
+/* ─── Weather Info ───────────────────────────────────────── */
 .status-container {
-  height: 38px;
-  margin-bottom: 8px;
+  height: 40px;
 }
-
-.status-msg {
-  font-size: 13.5px;
-  border-radius: 10px;
-  padding: 7px 12px;
-  font-weight: 500;
-}
-
-.error {
-  color: #ff8e9e;
-}
-.loading {
-  color: var(--accent-warm);
-}
-
-/* ─── Main Weather Info ──────────────────────────────────── */
-.main-info {
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
 .main-icon {
   width: 100px;
-  filter: drop-shadow(0 0 24px rgba(0, 194, 255, 0.38))
-    drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
   animation: float 6s ease-in-out infinite;
-  display: block;
 }
-
 @keyframes float {
   0%,
   100% {
@@ -318,293 +228,96 @@ body::after {
   }
 }
 
-.temp-container {
-  display: inline-flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2px;
-  margin: 8px 0 2px;
-  line-height: 1;
-}
-
 .temp {
-  font-family: "DM Sans", sans-serif;
   font-size: 80px;
   font-weight: 300;
-  letter-spacing: -4px;
-  line-height: 1;
-  background: linear-gradient(
-    175deg,
-    #ffffff 30%,
-    rgba(200, 235, 255, 0.8) 100%
-  );
+  background: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.6));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
-
 .unit-toggle {
-  font-size: 20px;
-  margin-top: 12px;
+  color: var(--accent);
   cursor: pointer;
   font-weight: 600;
-  color: var(--accent);
-  transition:
-    color 0.25s,
-    transform 0.25s;
-  text-shadow: 0 0 12px rgba(0, 194, 255, 0.6);
-  -webkit-text-fill-color: var(--accent);
 }
 
-.unit-toggle:hover {
-  transform: scale(1.18);
-  color: #60d5ff;
-  -webkit-text-fill-color: #60d5ff;
-}
-
-.city {
-  font-size: 16px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
-  letter-spacing: 0.5px;
-  margin-top: 2px;
-}
-
-/* ─── Details Grid ───────────────────────────────────────── */
 .details-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin: 18px 0;
+  margin: 20px 0;
 }
-
 .detail-item {
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 14px 16px;
+  padding: 15px;
   border-radius: 20px;
   display: flex;
   align-items: center;
   gap: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-top-color: rgba(255, 255, 255, 0.32);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 4px 12px rgba(0, 0, 0, 0.12);
-  transition:
-    background 0.25s,
-    box-shadow 0.25s,
-    transform 0.2s;
-  position: relative;
-  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.detail-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 45%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    transparent 100%
-  );
-  border-radius: 20px 20px 0 0;
-  pointer-events: none;
-}
-
-.detail-item:hover {
-  background: rgba(255, 255, 255, 0.14);
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    0 8px 24px rgba(0, 0, 0, 0.18);
-}
-
-.detail-item i {
-  font-size: 18px;
-  color: var(--accent);
-  text-shadow: 0 0 10px rgba(0, 194, 255, 0.55);
-  flex-shrink: 0;
-}
-
-.detail-item p {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 1px;
-}
-
-.detail-item span {
-  font-size: 11px;
-  color: var(--text-secondary);
-  font-weight: 400;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-}
-
-/* ─── Divider ─────────────────────────────────────────────── */
 .divider {
   border: 0;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.22) 20%,
-    rgba(255, 255, 255, 0.22) 80%,
-    transparent
-  );
-  margin-bottom: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
 }
 
-/* ─── Forecast ────────────────────────────────────────────── */
+/* ─── Forecast Reverted ──────────────────────────────────── */
 .forecast-section h3 {
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 1.8px;
+  letter-spacing: 1.5px;
   color: var(--text-secondary);
-  font-weight: 500;
-  margin-bottom: 14px;
   text-align: left;
+  margin-bottom: 12px;
 }
 
 .forecast-row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
-  padding: 4px 2px 10px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  -ms-overflow-style: none;
 }
 
-.forecast-row::-webkit-scrollbar {
-  height: 4px;
-}
-.forecast-row::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 10px;
-}
-.forecast-row::-webkit-scrollbar-thumb {
-  background: rgba(0, 194, 255, 0.3);
-  border-radius: 10px;
-}
-
-/* Liquid glass forecast cards */
 .forecast-card {
-  border-radius: 20px;
-  padding: 12px 6px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  cursor: default;
-  transition:
-    transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
-    background 0.45s ease,
-    box-shadow 0.45s ease,
-    border-color 0.45s ease;
-
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-top-color: rgba(255, 255, 255, 0.35);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
-    0 4px 16px rgba(0, 0, 0, 0.14);
-}
-
-/* Specular sheen on each forecast card */
-.forecast-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.16) 0%,
-    transparent 100%
-  );
-  border-radius: 20px 20px 0 0;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.45s ease;
+  border-radius: 18px;
+  padding: 10px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 0.3s;
 }
 
 .forecast-card:hover {
-  transform: translateY(-4px) scale(1);
-  background: rgba(255, 255, 255, 0.15);
-  border-top-color: rgba(255, 255, 255, 0.55);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.38),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
-    0 16px 40px rgba(0, 0, 0, 0.24),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.12);
 }
-
-.forecast-card:hover::before {
-  opacity: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.26) 0%,
-    transparent 100%
-  );
-}
-
 .forecast-card img {
-  width: 40px;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.22));
-  margin: 4px 0;
+  width: 35px;
 }
-
 .forecast-card p {
   font-size: 12px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.88);
-  margin: 2px 0;
+  font-weight: 600;
 }
-
 .forecast-card .fc-day {
   font-size: 10px;
   color: var(--text-secondary);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
   margin-bottom: 4px;
-}
-
-.forecast-card .fc-high {
-  font-size: 14px;
-  font-weight: 600;
-  color: #fff;
-}
-
-.forecast-card .fc-low {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.48);
 }
 
 /* ─── Footer ─────────────────────────────────────────────── */
 footer {
   padding: 20px;
   text-align: center;
-  font-size: 11.5px;
-  color: rgba(255, 255, 255, 0.32);
-  letter-spacing: 0.4px;
-  font-weight: 400;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
 }
 
-/* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 480px) {
-  .glass-card {
-    padding: 22px 18px 20px;
+  .app-container {
+    padding-top: 80px;
   }
   .temp {
-    font-size: 64px;
+    font-size: 60px;
   }
 }
